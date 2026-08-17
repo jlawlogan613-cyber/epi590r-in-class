@@ -1,3 +1,5 @@
+
+
 library(tidyverse)
 library(gtsummary)
 
@@ -80,5 +82,61 @@ tbl_summary(
   modify_header(label = "**Variable**", p.value = "**P**") |>
   # add a caption
   modify_caption("**Participant characteristics**")
+
+
+
+ tbl_summary(nlsy,
+		 include = c(region_cat, race_eth_cat, income, starts_with("sleep_")),
+	label = list(
+		region_cat ~ "Region",
+		race_eth_cat ~ "Race / Ethnicity",
+		income ~ "Income",
+		sleep_wkdy ~ "Sleep Weekdays hours",
+		sleep_wknd ~ "Sleep Weekends hours" ))
+
+tbl_summary(nlsy,
+								include=c(region_cat, race_eth_cat, income, starts_with("sleep")),
+								by=sex_cat,
+						digits= list( income ~ 3,
+						starts_with("sleep_") ~ 1),
+						statistic=list ( income ~ "{p10}, {p90}",
+													 starts_with("sleep_") ~ "{min}, {max}"
+						),
+								label=list(
+									region_cat ~ "Region",
+													race_eth_cat ~ "Race / Ethnicity",
+													income ~ "Income",
+													sleep_wkdy ~ "Sleep Weekdays hours",
+													sleep_wknd ~ "Sleep Weekends hours")) |>
+
+	add_p(test = list(
+		all_continuous() ~ "t.test",
+		all_categorical() ~ "chisq.test"
+	)) |>
+	add_overall(col_label = "**Total** N = {N}") |>
+
+modify_footnote_body (
+footnote = "https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data",
+columns = "label" ,
+	rows = variable== "race_eth_cat" & row_type == "label")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
