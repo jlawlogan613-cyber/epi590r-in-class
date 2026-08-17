@@ -131,4 +131,62 @@ tbl_merge(list(tbl_no_int, tbl_int),
   tab_spanner = c("**Model 1**", "**Model 2**")
 )
 
+##univariate table
+
+tbl_uvregression(
+	nlsy,
+	x = sex_cat,
+	include = c(nsibs, sleep_wkdy,sleep_wknd, income ),
+	method = lm)
+
+##poisson_model
+
+p_model <- glm(nsibs ~ eyesight_cat + sex_cat +income,
+											data = nlsy, family = poisson()
+)
+
+tbl_regression(
+	p_model,
+	exponentiate = TRUE,
+	label = list(
+		sex_cat ~ "Sex",
+		eyesight_cat ~ "Eyesight",
+		income ~ "US dollars"
+	)
+)
+
+
+
+logbinomal_model <- glm(glasses ~ eyesight_cat + sex_cat,
+											data = nlsy, family = binomial(link="log")
+)
+
+logbinomal_table<-tbl_regression(
+	logistic_model,
+	exponentiate = TRUE,
+	label = list(
+		sex_cat ~ "Sex",
+		eyesight_cat ~ "Eyesight"
+	)
+)
+
+tbl_merge(list(tbl_no_int, tbl_int),
+					tab_spanner = c("**logistic**", "**logbinomial**"))
+
+
+##bonus
+logpoisson_model <- glm(glasses ~ eyesight_cat + sex_cat,
+												data = nlsy, family = poisson()
+)
+
+logpoisson_table<-tbl_regression(
+	logistic_model,
+	exponentiate = TRUE,
+	label = list(
+		sex_cat ~ "Sex",
+		eyesight_cat ~ "Eyesight"
+	),
+	tidy_fun = partial(tidy_robust, vcov = "HC1")
+)
+1
 
