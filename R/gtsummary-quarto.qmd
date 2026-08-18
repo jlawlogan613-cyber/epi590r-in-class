@@ -4,8 +4,8 @@ format:
   html:
     theme: cosmo
     background-color: #11ffee00;
-    fontcolor: "navy" # Added so text remains readable on an indigo background
-    mainfont: sans-serif # Sets the document font family
+    fontcolor: "navy" 
+    mainfont: sans-serif 
 execute:
   echo: false
 ---
@@ -42,16 +42,23 @@ nlsy <- read_csv(here::here("data", "raw", "nlsy.csv"),
 -age
 
 ```{r}
+#| label: tbl-one
+#| tbl-cap: "Table of characteritsics stratified by sex"
 tbl_summary(
   nlsy,
   by = sex_cat,
   include = c(sex_cat, race_eth_cat, region_cat,
               eyesight_cat, glasses, age_bir))
 ```
+Figure 1: a table with the young adults characteritics stratified by sex
+
+@tbl-one contains information about young adults characteritics 
 
 # MORE TABLES 
 
 ```{r}
+#| label: tbl-two
+#| tbl-cap: "Table of characteritsics stratified by sex"
 tbl_summary(
   nlsy,
   by = sex_cat,
@@ -67,18 +74,90 @@ tbl_summary(
   missing_text = "Missing")
 
 ```
+Figure 2: a table with the young adults characteritics stratified by sex
+
+
 
 # MORE TABLES 
 
 ```{r}
+#| label: tbl-three
+#| tbl-cap: "Table of characteritsics stratified by sex"
 tbl_summary(
   nlsy,
   by = sex_cat,
   include = c(sex_cat, race_eth_cat, region_cat,
               eyesight_cat, glasses, age_bir))
 ```
+Figure 3: a table with the young adults characteritics stratified by sex
+
+
+# Quarto in class practice
+
+```{r}
+#| label: tbl-four
+#| tbl-cap: "Table including amount of sleep stratified by sex"
+tbl_four <- tbl_summary(
+  nlsy,
+  by = sex_cat,
+  include = c(sex_cat, sleep_wknd, sleep_wkdy, race_eth_cat, region_cat,
+              eyesight_cat, glasses, age_bir)) |>
+  add_overall(last = TRUE)
+
+tbl_four
+```
+Figure 4: a table with the young adults characteritics stratified by sex 
+
+
+@tbl-four contains information and @tbl-one a table.
+
+```{r}
+stats <- list(
+  n = nrow(nlsy),
+  median_sleep_wknd = median(nlsy$sleep_wknd, na.rm = TRUE)
+)
+
+stats <- list(
+  n = nrow(nlsy),
+  median_sleep_wkdy = median(nlsy$sleep_wkdy, na.rm = TRUE)
+)
 ```
 
-*These tables may not show full accurate data 
+
+```{r}
+inline_text(tbl_four, variable = "sleep_wknd")
+
+
+inline_text(tbl_four, variable = "sleep_wkdy")
+```
+
+This was from "Calculate the statistic directly as inline text from the table you created"
+
+```{r}
+inline_text(tbl_four, variable = "sleep_wknd", 
+    pattern = "{median})")
+
+
+inline_text(tbl_four, variable = "sleep_wkdy",
+					    pattern = "{median})")
+```
+Then i was asked to Reformat that inline text from the table so that it only prints the median, not the IQR.
+
+
+There were `r stats$n` participants with a median weekend sleep of `r stats$median_sleep_wknd` hours.
+
+There were `r stats$n` participants with a median weekday sleep of `r stats$median_sleep_wkdy` hours.
+
+**Add a chunk where you calculate median number of hours of sleep on weekends overall in the data (you can use the median(., na.rm = TRUE) function). Make sure your code prints that output when it renders.
+
+How to Change the means to medians in your table and re-render?
+```{r}
+
+```
+
+
+
+```
+
 
 
