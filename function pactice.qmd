@@ -1,0 +1,58 @@
+---
+title: "Quarto Practice 2"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+#| echo: false
+# start out with a number to test
+x <- 643
+# you'll want your function to return this number
+x^2
+square <- function(x) {
+	product_val <- x * x
+	return(product_val)
+} 
+
+
+```
+
+```{r}
+#| echo: false
+# start out with a number to test
+x <- 719087
+# you'll want your function to return this number
+x^2
+square <- function(x) {
+	product_val <- x * x
+	return(product_val)
+}  
+
+
+
+```
+
+```{r}
+
+```
+
+```{}
+```
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+```{r}
+#| echo: false
+```
