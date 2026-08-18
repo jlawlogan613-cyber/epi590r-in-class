@@ -187,3 +187,34 @@ summarize_two_vars(nlsy, income, nsibs)
 #    a gtsummary table stratified by it. Add at least one formatting function
 #    (bold_labels(), add_overall(), add_p(), modify_caption(), ...).
 #    Then call it twice with different grouping variables.
+
+
+table_by <- function(data, group) {
+ tbl_summary(	nlsy,
+		include = c(sex_cat, sleep_wknd, sleep_wkdy, race_eth_cat, region_cat,
+								eyesight_cat, glasses, age_bir))
+	.by  = {{ group }}
+	|>
+		add_overall(last = TRUE)
+
+}
+
+table_by(nlsy, sex_cat)
+table_by(nlsy, region_cat)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
