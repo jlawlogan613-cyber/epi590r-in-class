@@ -1,13 +1,12 @@
 ---
 title: "Gtsummary in quarto"
 format:
-  html:
+  docx:
     theme: sketchy
     backgroundcolor: lightblue
     fontcolor: "navy" 
     mainfont: sans-serif 
-execute:
-  echo: false
+    
 ---
 
 ```{r}
