@@ -72,18 +72,25 @@ return(raise_product)
 
 raise(x = 2, power = 4)
 
+for (i in 1:100) {
+	print(raise(x = i, power = 2))
+}
 
-```
 
-```{}
-```
-
-```{}
 ```
 
 ```{r}
 #| echo: false
-2 * 2
+sd_function <- function(x)
+	{ if (length(x) <= 1) 
+		
+	n <- length(x)
+	mean_val <- sum(x) / n
+	variance<- (x - mean_val)^2
+	sd_product  <- sum(variance) / (n - 1)
+	return(sd_product)}
+
+
 ```
 
 ```{r}
