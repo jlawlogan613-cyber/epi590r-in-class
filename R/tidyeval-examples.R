@@ -137,8 +137,8 @@ summarize_var_new <- function(data, variable) {
 	data |>
 		summarize(
 			median = median({{ variable }}, na.rm = TRUE),
-			p25    = quantile({{ variable }}, probs = 0.25, na.rm = TRUE),
-			p75    = quantile({{ variable }}, probs = 0.75, na.rm = TRUE)
+			quantile_25    = quantile({{ variable }}, p = 0.25, na.rm = TRUE),
+			quantile_75    = quantile({{ variable }}, p = 0.75, na.rm = TRUE)
 		)
 }
 
@@ -151,19 +151,18 @@ summarize_var_new(nlsy, nsibs)
 # 2. Add a `group` argument using .by = {{ group }}, with a default so that
 #    the function still works when you don't pass a group.
 
-summarize_var_new_1 <- function(data, variable) {
-	data |>
-		summarize(
+summarize_var_new_1 <- function(data, variable, group = NULL ) {
+		summarize(data,
 			median = median({{ variable }}, na.rm = TRUE),
-			p25    = quantile({{ variable }}, probs = 0.25, na.rm = TRUE),
-			p75    = quantile({{ variable }}, probs = 0.75, na.rm = TRUE),
-
-	.by  = {{ group }}
+			quantile_25    = quantile({{ variable }}, p = 0.25, na.rm = TRUE),
+			quantile_75    = quantile({{ variable }}, p = 0.75, na.rm = TRUE),
+			.by  = {{ group }}
 	)
 }
 
-summarize_var_new(nlsy, income, sex_cat)
-summarize_var_new(nlsy, income) # should still work
+summarize_var_new_1(nlsy, income, sex_cat)
+summarize_var_new_1(nlsy, income)
+# should still work
 
 # 3. Write a function summarize_two_vars() that takes a dataset and two variables and
 #    returns their correlation and covariance. Use {{ }} to pass the variables. Test it
